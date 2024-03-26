@@ -1,6 +1,5 @@
 package com.practice.practiceProject.controller;
 
-import com.practice.practiceProject.dto.UserDto;
 import com.practice.practiceProject.dto.UserInputDto;
 import com.practice.practiceProject.entities.User;
 import com.practice.practiceProject.exception.PracticeProjectException;
@@ -38,7 +37,9 @@ public class UserController {
 
     @GetMapping("/getUser/{emailId}")
     public ResponseEntity<PracticeProjectResponse> getSingleUser(@PathVariable String emailId) throws UserNotFoundException {
+        log.info("Started get single user API, emailId :{}",emailId);
         final PracticeProjectResponse practiceProjectResponse = this.userService.getSingleUser(emailId);
+        log.info("Completed get single user API, emailId :{}",emailId);
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);
     }
 
