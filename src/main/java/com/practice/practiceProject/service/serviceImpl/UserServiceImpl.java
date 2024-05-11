@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
         userDto.setDateOfBirth(newUser.getDateOfBirth());
         userDto.setLastName(newUser.getLastName());
         userDto.setPassword(passwordEncoder.encode(newUser.getPassword()));
+        userDto.setRoles(user.getRoles());
         log.info("Completed create user service method");
         return new PracticeProjectResponse("User created successfully", userDto);
 
@@ -96,6 +97,7 @@ public class UserServiceImpl implements UserService {
         userDto.setLastName(user.getLastName());
         userDto.setDateOfBirth(user.getDateOfBirth());
         userDto.setEmailId(user.getEmailId());
+        userDto.setRoles(user.getRoles());
         return new PracticeProjectResponse("User found", true, userDto);
     }
 

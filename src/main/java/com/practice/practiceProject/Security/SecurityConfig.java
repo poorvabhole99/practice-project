@@ -17,6 +17,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @EnableWebSecurity
 @Configuration
@@ -27,6 +28,12 @@ public class SecurityConfig {
 
   @Autowired
   private JwtAuthenticationEntryPoint point;
+
+  @Autowired
+  private JwtAuthFilter jwtAuthFilter;
+
+  private static final String EMPLOYEE="EMPLOYEE";
+  private static final String ADMIN = "ADMIN";
 
 
   /**
@@ -49,11 +56,13 @@ public class SecurityConfig {
                 .requestMatchers("/user/create").permitAll()
                     .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                 // Require authentication for endpoints matching "/user/getUser/**"
-                .requestMatchers("/user/getUser/**").authenticated())
+                .requestMatchers("/user/getUser/**").hasAnyRole(ADMIN,EMPLOYEE)
+                .requestMatchers("/user/delete/**").hasRole(ADMIN))
         // Configure authentication provider to be used for authentication
         .authenticationProvider(daoAuthenticationProvider())
         // Use HTTP Basic authentication with default settings
-        .httpBasic(withDefaults())
+//        .httpBasic(withDefaults())
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
         // Configure exception handling for authentication failures
         .exceptionHandling(ex -> ex.authenticationEntryPoint(point));
 
