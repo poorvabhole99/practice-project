@@ -1,7 +1,6 @@
 package com.practice.practiceProject.controller;
 
 import com.practice.practiceProject.Security.JwtHelper;
-import com.practice.practiceProject.Security.UserDetailsServiceImpl;
 import com.practice.practiceProject.entities.JwtRequest;
 import com.practice.practiceProject.entities.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
