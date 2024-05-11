@@ -9,12 +9,8 @@ import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Integer> {
-
     @Query(value = "select * from user where email_id = ?1 and is_active = 1", nativeQuery = true)
     Optional<User> findByEmailIdAndIsActive(String emailId);
-
-    boolean existsByEmailId(String emailId);
-
 
     Optional<User> findByEmailId(String emailId);
 }
