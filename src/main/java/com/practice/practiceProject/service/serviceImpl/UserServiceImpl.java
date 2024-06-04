@@ -1,5 +1,6 @@
 package com.practice.practiceProject.service.serviceImpl;
 
+import com.practice.practiceProject.constant.MessageConstant;
 import com.practice.practiceProject.dto.UserInputDto;
 import com.practice.practiceProject.enums.ErrorEnum;
 import com.practice.practiceProject.exception.PracticeProjectException;
@@ -84,7 +85,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public PracticeProjectResponse getSingleUser(final String emailId) throws UserNotFoundException {
         final Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
-//        System.out.println("*********************"+optionalUser.get());
         User user;
         if(optionalUser.isPresent()){
             user = optionalUser.get();
@@ -98,7 +98,7 @@ public class UserServiceImpl implements UserService {
         userDto.setDateOfBirth(user.getDateOfBirth());
         userDto.setEmailId(user.getEmailId());
         userDto.setRoles(user.getRoles());
-        return new PracticeProjectResponse("User found", true, userDto);
+        return new PracticeProjectResponse(MessageConstant.USER_FOUND_SUCCESS, true, userDto);
     }
 
 
@@ -117,7 +117,7 @@ public class UserServiceImpl implements UserService {
         }else {
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
-        return new PracticeProjectResponse("User Deleted successfully", true);
+        return new PracticeProjectResponse(MessageConstant.USER_DELETED_SUCCESS, true);
     }
     /**
      * Write API to update user
@@ -139,7 +139,7 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(userInputDto.getDateOfBirth());
         this.userRepository.save(user);
 
-        return new PracticeProjectResponse("User updated successfully", true, user);
+        return new PracticeProjectResponse(MessageConstant.USER_UPDATED_SUCCESS, true, user);
     }
 
 
