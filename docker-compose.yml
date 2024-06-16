@@ -1,0 +1,38 @@
+version: '3.8'
+
+services:
+  mysql:
+    container_name: mysql-db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: Saurabh*789
+    ports:
+      - "3307:3306"  # Port mapping: host_port:container_port
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - practiceproject
+
+  springbootapp:
+    container_name: spring-boot-app
+    build:
+      context: .  # Path to the Dockerfile for Spring Boot app
+      dockerfile: Dockerfile
+    ports:
+      - "8085:8085"
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/practice-project?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: Saurabh*789
+    networks:
+      - practiceproject  # Define the network as a list item
+
+volumes:
+  mysql_data:
+
+networks:
+  practiceproject:
+    driver: bridge

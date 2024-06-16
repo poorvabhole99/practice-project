@@ -57,7 +57,8 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST,"/auth/login").permitAll()
                 // Require authentication for endpoints matching "/user/getUser/**"
                 .requestMatchers("/user/getUser/**").hasAnyRole(ADMIN,EMPLOYEE)
-                .requestMatchers("/user/delete/**").hasRole(ADMIN))
+                .requestMatchers("/user/delete/**").hasRole(ADMIN)
+                .requestMatchers("/test/**").permitAll())
         // Configure authentication provider to be used for authentication
         .authenticationProvider(daoAuthenticationProvider())
         // Use HTTP Basic authentication with default settings
