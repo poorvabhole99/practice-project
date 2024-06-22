@@ -57,6 +57,7 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
 //        User user;
         if (optionalUser.isPresent()){
+            log.error("User with emailId already exist");
 //            user = optionalUser.get();
             throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg(),false, ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode()));
         }
@@ -89,15 +90,16 @@ public class UserServiceImpl implements UserService {
         if(optionalUser.isPresent()){
             user = optionalUser.get();
         }else {
+            log.error("user not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
-
         UserDto userDto = new UserDto();
         userDto.setFirstName(user.getFirstName());
         userDto.setLastName(user.getLastName());
         userDto.setDateOfBirth(user.getDateOfBirth());
         userDto.setEmailId(user.getEmailId());
         userDto.setRoles(user.getRoles());
+        log.info("single user returned");
         return new PracticeProjectResponse(MessageConstant.USER_FOUND_SUCCESS, true, userDto);
     }
 
@@ -115,8 +117,10 @@ public class UserServiceImpl implements UserService {
             user.setIsActive(false);
             this.userRepository.save(user);
         }else {
+            log.error("User not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
+        log.info("User deleted successfully");
         return new PracticeProjectResponse(MessageConstant.USER_DELETED_SUCCESS, true);
     }
     /**
@@ -131,6 +135,7 @@ public class UserServiceImpl implements UserService {
         if (updatedUser.isPresent()){
             user = updatedUser.get();
         }else {
+            log.error("User not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
 
@@ -139,13 +144,8 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(userInputDto.getDateOfBirth());
         this.userRepository.save(user);
 
+        log.info("User updated successfully");
         return new PracticeProjectResponse(MessageConstant.USER_UPDATED_SUCCESS, true, user);
     }
-
-
-
-
-
-
 
 }
