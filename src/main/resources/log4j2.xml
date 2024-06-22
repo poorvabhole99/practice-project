@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Logginf levels from lowest to highest are-->
+<!--1. Debug Detailed information, use only when diagnosing problems.-->
+<!--2. Info -  Verifications that operations are proceeding as planned.-->
+<!--3. Warning - An indication that something unexpected happened, applications still works-->
+<!--4. Error - Application unable to complete a task because of a more significant issue.-->
+<!--5. Critical - Major error, indicates application might not be able to function at all.-->
+<Configuration>
+
+    <!-- Setting up log path and log file name -->
+    <Properties>
+        <property name="practice-project" value="practice-project-log" />
+        <property name="logs-file-name" value="logs/practice-project/${practice-project}" />
+    </Properties>
+
+    <!-- Setting up logging pattern for console logging -->
+    <Appenders>
+        <Console name="ConsoleOutput" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="%style{%d{ISO8601}}{white} %highlight{%-5level} [%style{%t}{bright,yellow}] : %msg%n%throwable"
+            />
+        </Console>
+
+        <!-- Setting the filename and logging pattern for log file. Also setting
+            up a rolling policy with rolling done daily and when file size is 5MB -->
+        <RollingFile name="practice-project" filePattern="${logs-file-name}-%d{MM-dd-yyyy}.log" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level %c{2}: %L --> %msg%n</Pattern>
+            </PatternLayout>
+            <SizeBasedTriggeringPolicy size="5mb"/>
+        </RollingFile>
+
+        <!--  external folder for error logs-->
+        <RollingFile name="practice-project-errors" filePattern="${logs-file-name}-errors-%d{MM-dd-yyyy}.log" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{dd-MM-yyyy HH:mm:ss.SSS} %-5level %c{2}: %L --> %msg%n</Pattern>
+            </PatternLayout>
+            <SizeBasedTriggeringPolicy size="5mb"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+
+        <!-- Logging at INFO level -->
+        <Root level="info">
+            <AppenderRef ref="ConsoleOutput" />
+            <AppenderRef ref="practice-project" />
+        </Root>
+
+        <!-- Logging at error level -->
+        <Logger name="com.practice.practiceProject.exception" level="error" additivity="false">
+            <AppenderRef ref="practice-project-errors"/>
+        </Logger>
+
+        <!-- Logging at error level -->
+        <Logger name="com.practice.practiceProject" level="debug" additivity="false">
+            <AppenderRef ref="practice-project"/>
+            <AppenderRef ref="ConsoleOutput" />
+        </Logger>
+
+    </Loggers>
+
+</Configuration>
