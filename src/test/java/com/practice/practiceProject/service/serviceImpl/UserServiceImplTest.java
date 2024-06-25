@@ -29,7 +29,6 @@ class UserServiceImplTest extends TestContainerBase {
   @MockBean
   private UserRepository userRepository;
 
-  //TODO Add test cases for create user method
   @Test
   void createUser() throws PracticeProjectException {
     User user = new User();
@@ -45,7 +44,7 @@ class UserServiceImplTest extends TestContainerBase {
   }
 
   @Test
-  void createUser_validateEmailIdAndIsActive(){
+  void createUser_UserIsAlreadyExistAndActive(){
     final String emailId = "test@gmail.com";
     User user = new User();
     user.setFirstName("testFirstName");
@@ -53,9 +52,12 @@ class UserServiceImplTest extends TestContainerBase {
     user.setLastName("testLastName");
     user.setDateOfBirth("15/05/2000");
     user.setPassword("password");
+
     when(userRepository.findByEmailIdAndIsActive(emailId)).thenReturn(Optional.of(user));
+
     PracticeProjectException exception = assertThrows(PracticeProjectException.class, () ->
             userService.createUser(user));
+
     assertThat(exception.getErrorResponse().getMessage()).isEqualTo(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg());
     assertThat(exception.getErrorResponse().getStatusCode()).isEqualTo(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode());
     assertThat(exception.getErrorResponse().getSuccess()).isFalse();

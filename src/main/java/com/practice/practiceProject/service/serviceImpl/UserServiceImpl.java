@@ -38,7 +38,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public PracticeProjectResponse createUser(final User user) throws PracticeProjectException {
         log.info("Started create user service method");
+        //validate user exist
         validateEmailIdAndIsActive(user.getEmailId());
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         final User newUser = this.userRepository.save(user);
 
@@ -55,10 +57,8 @@ public class UserServiceImpl implements UserService {
     }
     private void validateEmailIdAndIsActive(String emailId) throws PracticeProjectException {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
-//        User user;
         if (optionalUser.isPresent()) {
             log.error("User with emailId already exist");
-//            user = optionalUser.get();
             throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg(), false, ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode()));
         }
     }
