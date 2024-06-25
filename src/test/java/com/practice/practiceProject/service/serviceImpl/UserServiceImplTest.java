@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 
+import com.practice.practiceProject.TestContainerBase;
 import com.practice.practiceProject.constant.MessageConstant;
 import com.practice.practiceProject.dto.UserInputDto;
 import com.practice.practiceProject.entities.User;
@@ -20,7 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 @SpringBootTest
-class UserServiceImplTest {
+class UserServiceImplTest extends TestContainerBase {
 
   @Autowired
   private UserService userService;
@@ -30,7 +31,34 @@ class UserServiceImplTest {
 
   //TODO Add test cases for create user method
   @Test
-  void createUser() {
+  void createUser() throws PracticeProjectException {
+    User user = new User();
+    user.setFirstName("testFirstName");
+    user.setEmailId("test@gmail.com");
+    user.setLastName("testLastName");
+    user.setDateOfBirth("15/05/2000");
+    user.setPassword("password");
+    when(userRepository.findByEmailIdAndIsActive("test@gmail.com")).thenReturn(Optional.empty());
+    when(userRepository.save(user)).thenReturn(user);
+    PracticeProjectResponse response = userService.createUser(user);
+    assertThat(response.getMessage()).isEqualTo("User created successfully");
+  }
+
+  @Test
+  void createUser_validateEmailIdAndIsActive(){
+    final String emailId = "test@gmail.com";
+    User user = new User();
+    user.setFirstName("testFirstName");
+    user.setEmailId("test@gmail.com");
+    user.setLastName("testLastName");
+    user.setDateOfBirth("15/05/2000");
+    user.setPassword("password");
+    when(userRepository.findByEmailIdAndIsActive(emailId)).thenReturn(Optional.of(user));
+    PracticeProjectException exception = assertThrows(PracticeProjectException.class, () ->
+            userService.createUser(user));
+    assertThat(exception.getErrorResponse().getMessage()).isEqualTo(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg());
+    assertThat(exception.getErrorResponse().getStatusCode()).isEqualTo(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode());
+    assertThat(exception.getErrorResponse().getSuccess()).isFalse();
   }
 
   @Test
@@ -38,11 +66,11 @@ class UserServiceImplTest {
     final String emailId = "test@gmail.com";
     when(userRepository.findByEmailIdAndIsActive(emailId)).thenReturn(Optional.empty());
     UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-        userService.getSingleUser(emailId));
+            userService.getSingleUser(emailId));
     assertThat(exception.getErrorResponse().getMessage()).isEqualTo(
-        ErrorEnum.USER_NOT_FOUND.getErrorMsg());
+            ErrorEnum.USER_NOT_FOUND.getErrorMsg());
     assertThat(exception.getErrorResponse().getStatusCode()).isEqualTo(
-        ErrorEnum.USER_NOT_FOUND.getErrorCode());
+            ErrorEnum.USER_NOT_FOUND.getErrorCode());
     assertThat(exception.getErrorResponse().getSuccess()).isEqualTo(false);
   }
 
@@ -66,11 +94,11 @@ class UserServiceImplTest {
     final String emailId = "test@gmail.com";
     when(userRepository.findByEmailIdAndIsActive(emailId)).thenReturn(Optional.empty());
     UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () ->
-        userService.deleteUser(emailId));
+            userService.deleteUser(emailId));
     assertThat(userNotFoundException.getErrorResponse().getMessage()).isEqualTo(
-        ErrorEnum.USER_NOT_FOUND.getErrorMsg());
+            ErrorEnum.USER_NOT_FOUND.getErrorMsg());
     assertThat(userNotFoundException.getErrorResponse().getStatusCode()).isEqualTo(
-        ErrorEnum.USER_NOT_FOUND.getErrorCode());
+            ErrorEnum.USER_NOT_FOUND.getErrorCode());
     assertThat(userNotFoundException.getErrorResponse().getSuccess()).isEqualTo(false);
   }
 
@@ -100,11 +128,11 @@ class UserServiceImplTest {
     userInputDto.setDateOfBirth("testDateOfBirth");
     when(userRepository.findByEmailIdAndIsActive(emailId)).thenReturn(Optional.empty());
     UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () ->
-        userService.updateUser(emailId,userInputDto));
+            userService.updateUser(emailId,userInputDto));
     assertThat(userNotFoundException.getErrorResponse().getMessage()).isEqualTo(
-        ErrorEnum.USER_NOT_FOUND.getErrorMsg());
+            ErrorEnum.USER_NOT_FOUND.getErrorMsg());
     assertThat(userNotFoundException.getErrorResponse().getStatusCode()).isEqualTo(
-        ErrorEnum.USER_NOT_FOUND.getErrorCode());
+            ErrorEnum.USER_NOT_FOUND.getErrorCode());
     assertThat(userNotFoundException.getErrorResponse().getSuccess()).isEqualTo(false);
   }
 

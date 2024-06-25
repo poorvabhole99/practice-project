@@ -56,28 +56,12 @@ public class UserServiceImpl implements UserService {
     private void validateEmailIdAndIsActive(String emailId) throws PracticeProjectException {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
 //        User user;
-        if (optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             log.error("User with emailId already exist");
 //            user = optionalUser.get();
-            throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg(),false, ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode()));
+            throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg(), false, ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode()));
         }
-
-//        if (userRepository.existsByEmailId(emailId)){
-//            throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg(),false, ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode()));
-//        }
     }
-//    private void validateActiveUser(String emailId) throws PracticeProjectException {
-//        Optional<User> optionalUser = this.userRepository.findByEmailId(emailId);
-//        User user = null;
-//        if (optionalUser.isPresent()){
-//            user = optionalUser.get();
-//        }else {
-//
-//        }
-//        if (user.getIsActive()){
-//            throw new PracticeProjectException(new ErrorResponse("User is active", false, "101-05"));
-//        }
-//    }
 
     /**
      * Write API to get details of a single user
