@@ -6,6 +6,7 @@ import com.practice.practiceProject.exception.PracticeProjectException;
 import com.practice.practiceProject.exception.UserNotFoundException;
 import com.practice.practiceProject.response.PracticeProjectResponse;
 import com.practice.practiceProject.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +29,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<PracticeProjectResponse> createUser(@RequestBody User user) throws PracticeProjectException {
+    public ResponseEntity<PracticeProjectResponse> createUser(@Valid @RequestBody  User user) throws PracticeProjectException {
         log.info("Started create user API ");
         final PracticeProjectResponse practiceProjectResponse = this.userService.createUser(user);
         log.info("Completed create user API");
