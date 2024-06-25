@@ -19,12 +19,14 @@ import org.springframework.web.filter.OncePerRequestFilter;
  */
 @Component
 public class JwtAuthFilter extends OncePerRequestFilter {
+    private final JwtHelper jwtHelper;
+    private final UserDetailsServiceImpl userDetailsServiceImpl;
+    public JwtAuthFilter(JwtHelper jwtHelper,UserDetailsServiceImpl userDetailsServiceImpl){
+        this.jwtHelper = jwtHelper;
+        this.userDetailsServiceImpl = userDetailsServiceImpl;
+    }
 
-    @Autowired
-    private JwtHelper jwtService;
 
-    @Autowired
-    UserDetailsServiceImpl userDetailsServiceImpl;
 
     /**
      * Performs the filter logic to validate JWT tokens and set up authentication.
@@ -45,7 +47,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         // Extract token and username from the authorization header
         if(authHeader != null && authHeader.startsWith("Bearer ")){
             token = authHeader.substring(7);
-            username = jwtService.getUsernameFromToken(token);
+            username = jwtHelper.getUsernameFromToken(token);
         }
 
         // If username is not null and there's no existing authentication
@@ -54,7 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(username);
 
             // Validate token with user details
-            if(jwtService.validateToken(token, userDetails)){
+            if(jwtHelper.validateToken(token, userDetails)){
                 // Create authentication token
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

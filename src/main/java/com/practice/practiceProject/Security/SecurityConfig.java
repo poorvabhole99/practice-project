@@ -22,15 +22,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig {
-
-  @Autowired
-  private UserDetailsService userDetailsService;
-
-  @Autowired
-  private JwtAuthenticationEntryPoint point;
-
-  @Autowired
-  private JwtAuthFilter jwtAuthFilter;
+  private final UserDetailsService userDetailsService;
+  private final JwtAuthenticationEntryPoint point;
+  private final JwtAuthFilter jwtAuthFilter;
+  public SecurityConfig(JwtAuthFilter jwtAuthFilter,UserDetailsService userDetailsService,JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint){
+    this.jwtAuthFilter = jwtAuthFilter;
+    this.userDetailsService = userDetailsService;
+    this.point = jwtAuthenticationEntryPoint;
+  }
 
   private static final String EMPLOYEE="EMPLOYEE";
   private static final String ADMIN = "ADMIN";
