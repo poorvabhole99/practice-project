@@ -46,12 +46,14 @@ public class UserController {
     @DeleteMapping("/delete/{emailId}")
     public ResponseEntity<PracticeProjectResponse> deleteUser(@PathVariable String emailId) throws UserNotFoundException {
         final PracticeProjectResponse practiceProjectResponse = this.userService.deleteUser(emailId);
+        log.info("Completed delete user API");
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);
     }
 
     @PutMapping("/update/{emailId}")
     public ResponseEntity<PracticeProjectResponse> updateUser(@PathVariable String emailId, @RequestBody UserInputDto userDto) throws PracticeProjectException {
         final PracticeProjectResponse practiceProjectResponse = this.userService.updateUser(emailId, userDto);
+        log.info("Completed update API");
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);
     }
 
