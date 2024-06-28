@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{emailId}")
-    public ResponseEntity<PracticeProjectResponse> updateUser(@PathVariable String emailId, @RequestBody UserInputDto userDto) throws PracticeProjectException {
+    public ResponseEntity<PracticeProjectResponse> updateUser(@PathVariable String emailId,@Valid @RequestBody UserInputDto userDto) throws PracticeProjectException {
         final PracticeProjectResponse practiceProjectResponse = this.userService.updateUser(emailId, userDto);
         log.info("Completed update API");
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);

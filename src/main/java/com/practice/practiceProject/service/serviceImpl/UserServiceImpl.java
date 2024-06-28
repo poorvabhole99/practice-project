@@ -11,6 +11,7 @@ import com.practice.practiceProject.entities.User;
 import com.practice.practiceProject.response.ErrorResponse;
 import com.practice.practiceProject.response.PracticeProjectResponse;
 import com.practice.practiceProject.service.UserService;
+import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
