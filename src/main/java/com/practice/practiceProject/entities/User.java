@@ -34,9 +34,9 @@ public class User {
     private String emailId;
 
     @Column(name = "first_name")
-    @Size(min = 3, message = "First Name can't be less than 3 letters")
     @NotBlank(message = "First name can't be blank")
     @NotNull(message = "Value can't be null")
+    @Size(min = 3, message = "First Name can't be less than 3 letters")
     private String firstName;
 
     @Column(name = "last_name")
