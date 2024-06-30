@@ -17,7 +17,6 @@ import lombok.ToString;
 public class UserInputDto {
 
     @Size(min = 3, message = "First Name can't be less than 3 letters")
-    @NotBlank(message = "First name can't be blank")
     @NotNull(message = "Value can't be null")
     private String firstName;
 
