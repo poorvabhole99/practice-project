@@ -11,7 +11,6 @@ import com.practice.practiceProject.entities.User;
 import com.practice.practiceProject.response.ErrorResponse;
 import com.practice.practiceProject.response.PracticeProjectResponse;
 import com.practice.practiceProject.service.UserService;
-import jakarta.validation.Valid;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
         log.info("Started create user service method");
         //validate user exist
         validateEmailIdAndIsActive(user.getEmailId());
-
+        validateEmailIdAndIsDeactivate(user.getEmailId());
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         final User newUser = this.userRepository.save(user);
 
@@ -54,8 +53,16 @@ public class UserServiceImpl implements UserService {
         userDto.setRoles(user.getRoles());
         log.info("Completed create user service method");
         return new PracticeProjectResponse("User created successfully", userDto);
-
     }
+
+    private void validateEmailIdAndIsDeactivate(String emailId) throws PracticeProjectException {
+        Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsDeactivated(emailId);
+        if (optionalUser.isPresent()) {
+            log.error("Account for this emailId is deactivated");
+            throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorMsg(), false, ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorCode()));
+        }
+    }
+
     private void validateEmailIdAndIsActive(String emailId) throws PracticeProjectException {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
         if (optionalUser.isPresent()) {
@@ -131,6 +138,23 @@ public class UserServiceImpl implements UserService {
 
         log.info("User updated successfully");
         return new PracticeProjectResponse(MessageConstant.USER_UPDATED_SUCCESS, true, user);
+    }
+
+    @Override
+    public PracticeProjectResponse activateUser(String emailId, Boolean activateUser) throws UserNotFoundException{
+        final Optional<User> optionalUser = this.userRepository.findByEmailId(emailId);
+        User user;
+        if(optionalUser.isPresent()){
+            user = optionalUser.get();
+            user.setIsActive(activateUser);
+            this.userRepository.save(user);
+        }else {
+            log.error("User not found exception");
+            throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
+        }
+        log.info("User avtivated successfully");
+        return new PracticeProjectResponse(MessageConstant.USER_ACTIVATE_SUCCESS, true);
+
     }
 
 }

@@ -59,6 +59,7 @@ public class SecurityConfig {
                                 // Require authentication for endpoints matching "/user/getUser/**"
                                 .requestMatchers(HttpMethod.GET, "/user/getUser/**").hasAnyRole(ADMIN, EMPLOYEE)
                                 .requestMatchers(HttpMethod.PUT,"/user/update/**").hasAnyRole(ADMIN)
+                                .requestMatchers(HttpMethod.PUT, "/user/activate/**").hasAnyRole(ADMIN, EMPLOYEE)
                                 .requestMatchers("/user/delete/**").hasRole(ADMIN)
                                 .requestMatchers("/test/**").permitAll())
 
