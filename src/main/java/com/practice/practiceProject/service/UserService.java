@@ -13,5 +13,5 @@ public interface UserService {
     PracticeProjectResponse getSingleUser(String emailId) throws UserNotFoundException;
     PracticeProjectResponse deleteUser(String emailId) throws UserNotFoundException;
     PracticeProjectResponse updateUser(String emailId, UserInputDto user) throws PracticeProjectException;
-    PracticeProjectResponse activateUser(String emailId, Boolean activateUser)throws UserNotFoundException;
+    PracticeProjectResponse activateUser(String emailId)throws UserNotFoundException;
 }

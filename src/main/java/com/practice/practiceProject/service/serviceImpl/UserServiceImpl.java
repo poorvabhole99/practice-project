@@ -3,6 +3,7 @@ package com.practice.practiceProject.service.serviceImpl;
 import com.practice.practiceProject.constant.MessageConstant;
 import com.practice.practiceProject.dto.UserInputDto;
 import com.practice.practiceProject.enums.ErrorEnum;
+import com.practice.practiceProject.enums.UserStatus;
 import com.practice.practiceProject.exception.PracticeProjectException;
 import com.practice.practiceProject.exception.UserNotFoundException;
 import com.practice.practiceProject.repository.UserRepository;
@@ -59,7 +60,8 @@ public class UserServiceImpl implements UserService {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsDeactivated(emailId);
         if (optionalUser.isPresent()) {
             log.error("Account for this emailId is deactivated");
-            throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorMsg(), false, ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorCode()));
+            String errorMessage = String.format(ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorMsg(), emailId);
+            throw new PracticeProjectException(new ErrorResponse(errorMessage, false, ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorCode()));
         }
     }
 
@@ -74,14 +76,14 @@ public class UserServiceImpl implements UserService {
     /**
      * Write API to get details of a single user
      * If user does not exist return proper message
-     * */
+     */
     @Override
     public PracticeProjectResponse getSingleUser(final String emailId) throws UserNotFoundException {
         final Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
         User user;
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             user = optionalUser.get();
-        }else {
+        } else {
             log.error("user not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
@@ -99,34 +101,36 @@ public class UserServiceImpl implements UserService {
     /**
      * Write API to delete a user (soft deletion)
      * For this you have to add a new field in User table( like user status)
-     * */
+     */
     @Override
     public PracticeProjectResponse deleteUser(String emailId) throws UserNotFoundException {
         final Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
         User user;
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             user = optionalUser.get();
-            user.setIsActive(false);
+//            user.setIsActive(false);
+            user.setStatus(UserStatus.INACTIVE);
             this.userRepository.save(user);
-        }else {
+        } else {
             log.error("User not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
         log.info("User deleted successfully");
         return new PracticeProjectResponse(MessageConstant.USER_DELETED_SUCCESS, true);
     }
+
     /**
      * Write API to update user
      * kept previous scenario in mind, can not update user email
-     * */
+     */
 
     @Override
     public PracticeProjectResponse updateUser(String emailId, UserInputDto userInputDto) throws PracticeProjectException {
         final Optional<User> updatedUser = this.userRepository.findByEmailIdAndIsActive(emailId);
         User user = null;
-        if (updatedUser.isPresent()){
+        if (updatedUser.isPresent()) {
             user = updatedUser.get();
-        }else {
+        } else {
             log.error("User not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
@@ -141,15 +145,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public PracticeProjectResponse activateUser(String emailId, Boolean activateUser) throws UserNotFoundException{
+    public PracticeProjectResponse activateUser(String emailId) throws UserNotFoundException {
         final Optional<User> optionalUser = this.userRepository.findByEmailId(emailId);
         User user;
-        if(optionalUser.isPresent()){
+        if (optionalUser.isPresent()) {
             user = optionalUser.get();
-            user.setIsActive(activateUser);
+            user.setStatus(UserStatus.ACTIVE);
             this.userRepository.save(user);
-        }else {
-            log.error("User not found exception");
+        } else {
+            log.error("User with emailId" + emailId + "not found exception");
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
         log.info("User avtivated successfully");

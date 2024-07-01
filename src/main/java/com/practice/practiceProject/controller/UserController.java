@@ -58,9 +58,9 @@ public class UserController {
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);
     }
 
-    @PutMapping("/activate/{emailId}/{activateUser}")
-    public ResponseEntity<PracticeProjectResponse> activateUser(@PathVariable String emailId, @PathVariable Boolean activateUser) throws UserNotFoundException {
-        final PracticeProjectResponse practiceProjectResponse = this.userService.activateUser(emailId, activateUser);
+    @PutMapping("/activate/{emailId}")
+    public ResponseEntity<PracticeProjectResponse> activateUser(@PathVariable String emailId) throws UserNotFoundException {
+        final PracticeProjectResponse practiceProjectResponse = this.userService.activateUser(emailId);
         log.info("Completed activate user API");
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);
     }
