@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
     private void validateEmailIdAndIsDeactivate(String emailId) throws PracticeProjectException {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsDeactivated(emailId);
         if (optionalUser.isPresent()) {
-            log.error("Account for this emailId is deactivated");
+//            log.error("Account for this emailId is deactivated");
+            log.error("Account for email id {} is deactivated", emailId);
             String errorMessage = String.format(ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorMsg(), emailId);
             throw new PracticeProjectException(new ErrorResponse(errorMessage, false, ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorCode()));
         }
@@ -68,7 +69,7 @@ public class UserServiceImpl implements UserService {
     private void validateEmailIdAndIsActive(String emailId) throws PracticeProjectException {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsActive(emailId);
         if (optionalUser.isPresent()) {
-            log.error("User with emailId already exist");
+            log.error("User with email id {} already exist", emailId);
             throw new PracticeProjectException(new ErrorResponse(ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorMsg(), false, ErrorEnum.USER_EMAIL_ALREADY_EXIST.getErrorCode()));
         }
     }
@@ -84,7 +85,7 @@ public class UserServiceImpl implements UserService {
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
         } else {
-            log.error("user not found exception");
+            log.error("user with email id {} not found exception", emailId);
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
         UserDto userDto = new UserDto();
@@ -112,10 +113,10 @@ public class UserServiceImpl implements UserService {
             user.setStatus(UserStatus.INACTIVE);
             this.userRepository.save(user);
         } else {
-            log.error("User not found exception");
+            log.error("user with email id {} not found exception", emailId);
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
-        log.info("User deleted successfully");
+        log.info("User with email id {} deleted successfully", emailId);
         return new PracticeProjectResponse(MessageConstant.USER_DELETED_SUCCESS, true);
     }
 
@@ -131,7 +132,7 @@ public class UserServiceImpl implements UserService {
         if (updatedUser.isPresent()) {
             user = updatedUser.get();
         } else {
-            log.error("User not found exception");
+            log.error("user with email id {} not found exception", emailId);
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
 
@@ -140,7 +141,7 @@ public class UserServiceImpl implements UserService {
         user.setDateOfBirth(userInputDto.getDateOfBirth());
         this.userRepository.save(user);
 
-        log.info("User updated successfully");
+        log.info("User with email id {} updated successfully", emailId);
         return new PracticeProjectResponse(MessageConstant.USER_UPDATED_SUCCESS, true, user);
     }
 
@@ -153,10 +154,10 @@ public class UserServiceImpl implements UserService {
             user.setStatus(UserStatus.ACTIVE);
             this.userRepository.save(user);
         } else {
-            log.error("User with emailId" + emailId + "not found exception");
+            log.error("user with email id {} not found exception", emailId);
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
-        log.info("User avtivated successfully");
+        log.info("User with email id {} avtivated successfully", emailId);
         return new PracticeProjectResponse(MessageConstant.USER_ACTIVATE_SUCCESS, true);
 
     }
