@@ -1,7 +1,10 @@
 package com.practice.practiceProject.entities;
 
+import com.practice.practiceProject.enums.UserStatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -51,8 +54,12 @@ public class User {
     @NotBlank(message = "Password can't be blank")
     private String password;
 
-    @Column(name = "is_active")
-    private Boolean isActive;
+//    @Column(name = "is_active")
+//    private Boolean isActive;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status", nullable = false)
+    private String status;
 
     @Column(name = "roles")
     private Set<String> roles;
