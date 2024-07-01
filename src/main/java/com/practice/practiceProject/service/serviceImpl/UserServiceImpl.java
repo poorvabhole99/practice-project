@@ -3,7 +3,7 @@ package com.practice.practiceProject.service.serviceImpl;
 import com.practice.practiceProject.constant.MessageConstant;
 import com.practice.practiceProject.dto.UserInputDto;
 import com.practice.practiceProject.enums.ErrorEnum;
-import com.practice.practiceProject.enums.UserStatus;
+import com.practice.practiceProject.enums.UserStatusEnum;
 import com.practice.practiceProject.exception.PracticeProjectException;
 import com.practice.practiceProject.exception.UserNotFoundException;
 import com.practice.practiceProject.repository.UserRepository;
@@ -59,9 +59,8 @@ public class UserServiceImpl implements UserService {
     private void validateEmailIdAndIsDeactivate(String emailId) throws PracticeProjectException {
         Optional<User> optionalUser = this.userRepository.findByEmailIdAndIsDeactivated(emailId);
         if (optionalUser.isPresent()) {
-//            log.error("Account for this emailId is deactivated");
             log.error("Account for email id {} is deactivated", emailId);
-            String errorMessage = String.format(ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorMsg(), emailId);
+            final String errorMessage = String.format(ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorMsg(), emailId);
             throw new PracticeProjectException(new ErrorResponse(errorMessage, false, ErrorEnum.USER_EMAIL_DEACTIVATED.getErrorCode()));
         }
     }
@@ -109,11 +108,10 @@ public class UserServiceImpl implements UserService {
         User user;
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
-//            user.setIsActive(false);
-            user.setStatus(UserStatus.INACTIVE);
+            user.setStatus(UserStatusEnum.INACTIVE.getValue());
             this.userRepository.save(user);
         } else {
-            log.error("user with email id {} not found exception", emailId);
+            log.error("user with email id {} not found", emailId);
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
         log.info("User with email id {} deleted successfully", emailId);
@@ -151,10 +149,10 @@ public class UserServiceImpl implements UserService {
         User user;
         if (optionalUser.isPresent()) {
             user = optionalUser.get();
-            user.setStatus(UserStatus.ACTIVE);
+            user.setStatus(UserStatusEnum.ACTIVE.getValue());
             this.userRepository.save(user);
         } else {
-            log.error("user with email id {} not found exception", emailId);
+            log.error("user with email id {} not found", emailId);
             throw new UserNotFoundException(new ErrorResponse(ErrorEnum.USER_NOT_FOUND.getErrorMsg(), false, ErrorEnum.USER_NOT_FOUND.getErrorCode()));
         }
         log.info("User with email id {} avtivated successfully", emailId);

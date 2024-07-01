@@ -1,6 +1,6 @@
 package com.practice.practiceProject.entities;
 
-import com.practice.practiceProject.enums.UserStatus;
+import com.practice.practiceProject.enums.UserStatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -59,7 +59,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
-    private UserStatus status;
+    private String status;
 
     @Column(name = "roles")
     private Set<String> roles;
