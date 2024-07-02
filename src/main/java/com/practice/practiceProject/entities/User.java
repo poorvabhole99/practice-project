@@ -54,10 +54,6 @@ public class User {
     @NotBlank(message = "Password can't be blank")
     private String password;
 
-//    @Column(name = "is_active")
-//    private Boolean isActive;
-
-    @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
     private String status;
 
