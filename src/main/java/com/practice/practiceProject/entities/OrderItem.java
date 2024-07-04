@@ -1,5 +1,6 @@
 package com.practice.practiceProject.entities;
 
+import com.practice.practiceProject.audit.Auditable;
 import com.practice.practiceProject.constant.OrderItemConstant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Entity
 @Table(name = "order_item")
-public class OrderItem {
+public class OrderItem extends Auditable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id")

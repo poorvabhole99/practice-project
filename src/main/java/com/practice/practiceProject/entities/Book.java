@@ -1,5 +1,6 @@
 package com.practice.practiceProject.entities;
 
+import com.practice.practiceProject.audit.Auditable;
 import com.practice.practiceProject.constant.BookConstant;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -20,8 +21,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "book")
-public class Book {
+@Table(name = "books")
+public class Book extends Auditable {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

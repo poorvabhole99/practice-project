@@ -1,5 +1,6 @@
 package com.practice.practiceProject.controller;
 
+import com.practice.practiceProject.annotation.TrackExecutionTime;
 import com.practice.practiceProject.dto.UserInputDto;
 import com.practice.practiceProject.entities.User;
 import com.practice.practiceProject.exception.PracticeProjectException;
@@ -29,6 +30,7 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/create")
+    @TrackExecutionTime
     public ResponseEntity<PracticeProjectResponse> createUser(@Valid @RequestBody  User user) throws PracticeProjectException {
         log.info("Started create user API ");
         final PracticeProjectResponse practiceProjectResponse = this.userService.createUser(user);
@@ -37,6 +39,7 @@ public class UserController {
     }
 
     @GetMapping("/getUser/{emailId}")
+    @TrackExecutionTime
     public ResponseEntity<PracticeProjectResponse> getSingleUser(@PathVariable String emailId) throws UserNotFoundException {
         log.info("Started get single user API, emailId :{}",emailId);
         final PracticeProjectResponse practiceProjectResponse = this.userService.getSingleUser(emailId);
@@ -45,6 +48,7 @@ public class UserController {
     }
 
     @DeleteMapping("/delete/{emailId}")
+    @TrackExecutionTime
     public ResponseEntity<PracticeProjectResponse> deleteUser(@PathVariable String emailId) throws UserNotFoundException {
         final PracticeProjectResponse practiceProjectResponse = this.userService.deleteUser(emailId);
         log.info("Completed delete user API");
@@ -52,13 +56,14 @@ public class UserController {
     }
 
     @PutMapping("/update/{emailId}")
+    @TrackExecutionTime
     public ResponseEntity<PracticeProjectResponse> updateUser(@PathVariable String emailId,@Valid @RequestBody UserInputDto userDto) throws PracticeProjectException {
         final PracticeProjectResponse practiceProjectResponse = this.userService.updateUser(emailId, userDto);
-        log.info("Completed update API");
         return new ResponseEntity<>(practiceProjectResponse, HttpStatus.OK);
     }
 
     @PutMapping("/activate/{emailId}")
+    @TrackExecutionTime
     public ResponseEntity<PracticeProjectResponse> activateUser(@PathVariable String emailId) throws UserNotFoundException {
         final PracticeProjectResponse practiceProjectResponse = this.userService.activateUser(emailId);
         log.info("Completed activate user API");
