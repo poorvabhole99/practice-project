@@ -1,5 +1,6 @@
 package com.practice.practiceProject.entities;
 
+import com.practice.practiceProject.audit.Auditable;
 import com.practice.practiceProject.enums.UserStatusEnum;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,7 +23,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "user")
-public class User {
+public class User extends Auditable {
 
 
     @Id

@@ -3,6 +3,7 @@ package com.practice.practiceProject.Security;
 import com.practice.practiceProject.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +19,7 @@ import java.util.List;
  */
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class CustomUserDetails implements UserDetails {
 
     /**
