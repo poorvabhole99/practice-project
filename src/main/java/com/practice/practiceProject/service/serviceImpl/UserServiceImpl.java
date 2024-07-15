@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Optional;
 
 @Service
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
         userDto.setLastName(newUser.getLastName());
         userDto.setPassword(passwordEncoder.encode(newUser.getPassword()));
         userDto.setRoles(user.getRoles());
+
         log.info("Completed create user service method");
         return new PracticeProjectResponse("User created successfully", userDto);
     }

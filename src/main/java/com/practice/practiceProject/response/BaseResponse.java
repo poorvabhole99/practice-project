@@ -23,4 +23,8 @@ public class BaseResponse implements Serializable {
         this.message = message;
     }
 
+    public BaseResponse(Boolean success) {
+        this.success = success;
+    }
+
 }

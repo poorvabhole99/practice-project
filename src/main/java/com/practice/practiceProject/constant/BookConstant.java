@@ -8,5 +8,8 @@ public class BookConstant {
   public static final String NULL_BOOK_PRICE = "Book price can not be null.";
   public static final String NULL_RENTAL_PRICE = "Rental price can not be null.";
   public static final String NULL_BOOK_STOCK = "Book stock an not be null.";
+  public static final String BOOK_ADDED_SUCCESS = "Book added successfully.";
+  public static final String BOOK_UPDATE_SUCCESS = "Book updated successfully.";
+  public static final String BOOK_DELETE_SUCCESS = "Book deleted successfully.";
 
 }
