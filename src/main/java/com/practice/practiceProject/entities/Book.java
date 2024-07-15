@@ -15,6 +15,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
@@ -22,6 +23,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "books")
+@ToString
 public class Book extends Auditable {
 
   @Id
@@ -39,7 +41,7 @@ public class Book extends Auditable {
   @Size(max = 20, message = BookConstant.LONG_AUTHOR_NAME)
   private String authorName;
 
-  @Column(name = "is_bn")
+  @Column(name = "isbn")
   private String isbn;  //Unique identifier for book
 
   @NotNull(message = BookConstant.NULL_BOOK_PRICE)
@@ -53,11 +55,5 @@ public class Book extends Auditable {
   @NotNull(message = BookConstant.NULL_BOOK_STOCK)
   @Column(name = "stock")
   private Integer stock;
-
-  @Column(name = "created_at")
-  private Date createdAt;
-
-  @Column(name = "updated_at")
-  private Date updatedAt;
 
 }

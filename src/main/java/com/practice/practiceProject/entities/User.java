@@ -1,11 +1,10 @@
 package com.practice.practiceProject.entities;
 
 import com.practice.practiceProject.audit.Auditable;
-import com.practice.practiceProject.enums.UserStatusEnum;
+import com.practice.practiceProject.helper.SetToStringConverter;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -59,5 +58,6 @@ public class User extends Auditable {
     private String status;
 
     @Column(name = "roles")
+    @Convert(converter = SetToStringConverter.class)
     private Set<String> roles;
 }
