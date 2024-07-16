@@ -76,6 +76,7 @@ public class ShopOwnerController {
      * GET /shopOwner/customers
      * Get a list of all customers.
      */
+    @TrackExecutionTime
     @GetMapping("/allCustomers")
     public ResponseEntity<UserResponse> getAllCustomers() throws PracticeProjectException {
         return ResponseEntity.ok(this.shopOwnerService.getAllCustomers());

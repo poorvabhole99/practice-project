@@ -1,5 +1,16 @@
 package com.practice.practiceProject.enums;
 
-public class RoleEnum {
+import lombok.Getter;
+
+@Getter
+public enum RoleEnum {
+  CUSTOMER("ROLE_CUSTOMER"),
+  SHOP_OWNER("ROLE_SHOP_OWNER");
+
+  private final String value;
+
+  RoleEnum(String value) {
+    this.value = value;
+  }
 
 }

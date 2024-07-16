@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>springbootBasic.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="lifecycle-of-a-spring-boot-application">Lifecycle of a Spring Boot Application</h2>
+<p>When a Spring Boot application starts, several key events and processes occur behind the scenes to initialize and prepare the application for execution:</p>
+<ol>
+<li>
+<p><strong>Main Method Execution</strong>:</p>
+<ul>
+<li>The application's journey begins with the execution of the main method in your designated entry point class (typically annotated with <code>@SpringBootApplication</code>).</li>
+</ul>
+</li>
+<li>
+<p><strong>Spring Application Bootstrap</strong>:</p>
+<ul>
+<li>Spring Boot's <code>SpringApplication</code> class takes charge, initiating the application context, which serves as the core of any Spring application.</li>
+</ul>
+</li>
+<li>
+<p><strong>Auto-Configuration Magic</strong>:</p>
+<ul>
+<li>Spring Boot excels with its auto-configuration feature. It scans the classpath for dependencies included in your project and automatically configures beans (reusable components) based on these dependencies. For example, including <code>spring-boot-starter-web</code> may automatically configure a web server like Tomcat.</li>
+</ul>
+</li>
+<li>
+<p><strong>Component Scanning</strong>:</p>
+<ul>
+<li>Spring Boot scans your application's package structure to discover classes annotated with <code>@Component</code> or other relevant annotations, indicating their importance to the application's functionality.</li>
+</ul>
+</li>
+<li>
+<p><strong>Bean Creation and Dependency Injection</strong>:</p>
+<ul>
+<li>Using the information gathered from component scanning and auto-configuration, Spring Boot creates instances (beans) of these components and injects any dependencies they require, ensuring seamless interaction between components.</li>
+</ul>
+</li>
+<li>
+<p><strong>Environment Setup</strong>:</p>
+<ul>
+<li>Spring Boot configures the application's environment, considering factors such as command line arguments and system properties, enabling your application to adapt to different deployment environments.</li>
+</ul>
+</li>
+<li>
+<p><strong>Application Runner/Listener Execution</strong>:</p>
+<ul>
+<li>If your application implements the <code>ApplicationRunner</code> or <code>ApplicationListener</code> interfaces, Spring Boot invokes their methods at this stage. This allows for custom actions to be performed when the application starts.</li>
+</ul>
+</li>
+<li>
+<p><strong>Server Startup (if applicable)</strong>:</p>
+<ul>
+<li>For web applications (those using dependencies like <code>spring-boot-starter-web</code>), Spring Boot initializes and configures a web server (e.g., Tomcat or Jetty) in the background, preparing to handle incoming HTTP requests.</li>
+</ul>
+</li>
+<li>
+<p><strong>Application Ready</strong>:</p>
+<ul>
+<li>Once all initialization steps are completed, Spring Boot considers the application ready to serve requests. Your defined components and services are now operational.</li>
+</ul>
+</li>
+</ol>
+<p>This overview provides a simplified yet comprehensive look at the sequence of events that occur when a Spring Boot application starts up, highlighting the framework's capabilities in simplifying the development and deployment of Java applications.</p>
+<h2 id="understanding-springbootapplication-annotation-in-spring-boot">Understanding @SpringBootApplication Annotation in Spring Boot</h2>
+<p>The <code>@SpringBootApplication</code> annotation in Spring Boot is a convenient way to configure a Spring application. It combines the functionalities of three annotations:</p>
+<h3 id="enableautoconfiguration">@EnableAutoConfiguration</h3>
+<p>This enables Spring Boot's auto-configuration mechanism. Spring Boot scans the classpath for dependencies and automatically configures beans based on what it finds. This saves you a lot of boilerplate configuration code. For instance, if <code>spring-webmvc</code> is present on the classpath, this annotation flags the application as a web application and activates behaviors such as setting up a DispatcherServlet.</p>
+<h3 id="componentscan">@ComponentScan</h3>
+<p>This annotation instructs Spring to scan the current package and its sub-packages for Spring components. It automatically discovers and registers components like <code>@Component</code>, <code>@Service</code>, <code>@Repository</code>, and <code>@Controller</code> beans.</p>
+<h3 id="configuration">@Configuration</h3>
+<p>This annotation indicates that the class can be used by the Spring IoC container as a source of bean definitions. It allows defining beans using Java configuration rather than XML.</p>
+<p>By using <code>@SpringBootApplication</code>, you can enable all these features with a single annotation. Here’s an example of how it is used:</p>
+<pre class="hljs"><code><div><span class="hljs-keyword">import</span> org.springframework.boot.SpringApplication;
+<span class="hljs-keyword">import</span> org.springframework.boot.autoconfigure.SpringBootApplication;
+
+<span class="hljs-meta">@SpringBootApplication</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MySpringBootApplication</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>{
+        SpringApplication.run(MySpringBootApplication<span class="hljs-class">.<span class="hljs-keyword">class</span>, <span class="hljs-title">args</span>)</span>;
+    }
+}
+
+</div></code></pre>
+<h2 id="introduction-to-restcontroller-in-spring-boot">Introduction to @RestController in Spring Boot</h2>
+<h3 id="rest-and-spring-boot">REST and Spring Boot</h3>
+<p>REST stands for Representational State Transfer, which defines a set of rules for how data is exchanged between applications over the internet. Spring Boot is a framework that simplifies building web services that adhere to the REST architectural style.</p>
+<h3 id="what-restcontroller-does">What @RestController Does</h3>
+<p>The <code>@RestController</code> annotation in Spring Boot serves several purposes:</p>
+<ul>
+<li>
+<p><strong>Marks a Class as a Controller</strong>: This class handles incoming requests from web clients (like browsers or mobile apps).</p>
+</li>
+<li>
+<p><strong>Combines Annotations</strong>: It's a convenient shortcut that combines the functionality of <code>@Controller</code> and <code>@ResponseBody</code>.</p>
+<ul>
+<li>
+<p><code>@Controller</code> informs Spring that this class is a controller.</p>
+</li>
+<li>
+<p><code>@ResponseBody</code> instructs Spring to automatically convert data returned by the controller methods into a format suitable for sending over the web (often JSON or XML).</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="benefits-of-using-restcontroller">Benefits of Using @RestController</h3>
+<p>Using <code>@RestController</code> offers several advantages:</p>
+<ul>
+<li>
+<p><strong>Cleaner Code</strong>: You don't need to annotate every method with <code>@ResponseBody</code>, which makes your code more concise.</p>
+</li>
+<li>
+<p><strong>Focus on Data</strong>: You can focus on writing the logic for handling requests and returning data without worrying about the details of how the data is formatted and sent back.</p>
+</li>
+</ul>
+<p>In essence, <code>@RestController</code> simplifies the process of building RESTful web services in Spring Boot by handling common tasks for you, thereby streamlining your development workflow.</p>
+<h1 id="understanding-responsebody-annotation-in-spring-boot">Understanding @ResponseBody Annotation in Spring Boot</h1>
+<p>In Spring Boot, the <code>@ResponseBody</code> annotation functions like a waiter in a restaurant who takes a prepared meal and serves it directly to the customer. In web development terms, it instructs Spring Boot on how to handle the data returned from a controller method.</p>
+<h2 id="how-responsebody-works">How @ResponseBody Works</h2>
+<ol>
+<li>
+<p><strong>Processing Controller Methods</strong>:</p>
+<ul>
+<li>Controller methods in Spring Boot process incoming requests and typically return data as a response.</li>
+</ul>
+</li>
+<li>
+<p><strong>Default Behavior</strong>:</p>
+<ul>
+<li>By default, Spring Boot might interpret this returned data as a view name, suitable for rendering a webpage template.</li>
+</ul>
+</li>
+<li>
+<p><strong>Role of @ResponseBody</strong>:</p>
+<ul>
+<li><code>@ResponseBody</code> explicitly instructs Spring Boot to treat the returned data as the actual response body itself.</li>
+<li>This data is serialized (converted) into a format like JSON or XML, making it suitable for transmission over the internet.</li>
+</ul>
+</li>
+<li>
+<p><strong>Common Use Cases</strong>:</p>
+<ul>
+<li><strong>Returning Data Objects</strong>: When a controller method returns a Java object containing information, <code>@ResponseBody</code> ensures it's serialized into a consumable format like JSON before sending it back.</li>
+<li><strong>Creating APIs</strong>: In RESTful APIs, where data is exchanged in formats such as JSON or XML, <code>@ResponseBody</code> facilitates handling and transmitting this data.</li>
+</ul>
+</li>
+</ol>
+<p>In summary, <code>@ResponseBody</code> is pivotal for transforming the output of your Spring Boot controller into a format that web clients (e.g., browsers or mobile apps) can easily understand and utilize. This annotation is fundamental for building robust web services that adhere to modern web development standards.</p>
+<h2 id="autowiring-in-spring-boot-applications">Autowiring in Spring Boot Applications</h2>
+<p>In Spring Boot applications, autowiring is a mechanism for automatic dependency injection. It simplifies the process of injecting collaborating beans (objects) into your classes. Here's a detailed explanation:</p>
+<h3 id="what-are-dependencies">What are Dependencies?</h3>
+<p>A dependency is an object that another object needs to function properly. In Spring, these objects are often managed as beans. For example, a <code>UserService</code> might depend on a <code>UserRepository</code> to access user data.</p>
+<h3 id="traditional-approach-without-autowiring">Traditional Approach (Without Autowiring)</h3>
+<p>In the past, you would explicitly configure dependencies in XML files or Java configuration classes. This involved specifying the bean name and the type of dependency to be injected.</p>
+<h3 id="autowiring-with-autowired-annotation">Autowiring with @Autowired Annotation</h3>
+<p>Spring Boot offers the <code>@Autowired</code> annotation to simplify dependency injection:</p>
+<ul>
+<li>You can mark a field, setter method, or constructor argument with <code>@Autowired</code>.</li>
+<li>Spring will automatically detect and inject a compatible bean during object creation.</li>
+</ul>
+<h3 id="benefits-of-autowiring">Benefits of Autowiring</h3>
+<ul>
+<li><strong>Reduced Boilerplate Code:</strong> Eliminates the need for manual configuration of dependencies.</li>
+<li><strong>Improved Maintainability:</strong> Code becomes cleaner and easier to understand by focusing on object relationships rather than configuration details.</li>
+<li><strong>Flexibility:</strong> Spring can choose the appropriate bean based on type or qualifiers (if multiple beans of the same type exist).</li>
+</ul>
+<h2 id="how-autowiring-works">How Autowiring Works</h2>
+<ol>
+<li><strong>Bean Creation:</strong> When Spring creates an object with an autowired dependency, it scans for compatible beans in the application context.</li>
+<li><strong>Matching Beans:</strong> Spring looks for a bean that matches the type of the autowired dependency.</li>
+<li><strong>Injection:</strong> If a unique matching bean is found, Spring injects that bean into the dependent object.</li>
+<li><strong>Qualifiers (Optional):</strong> If multiple beans of the same type exist, you can use qualifiers (annotations like <code>@Qualifier</code>) to specify the exact bean to be injected.</li>
+</ol>
+<h3 id="example">Example</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>{
+
+    <span class="hljs-meta">@Autowired</span>
+    <span class="hljs-keyword">private</span> UserRepository userRepository;
+
+    <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title">getAllUsers</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> userRepository.findAll();
+    }
+}
+</div></code></pre>
+<h2 id="understanding-beans-in-spring-boot">Understanding Beans in Spring Boot</h2>
+<p>In Spring Boot (and Spring Framework in general), beans are the fundamental building blocks of your application. They represent objects that are managed by the Spring container. Here's a breakdown of the concept:</p>
+<h3 id="what-are-beans">What are Beans?</h3>
+<ul>
+<li>Beans are Java objects that Spring creates, configures, and manages throughout the application lifecycle.</li>
+<li>They can range from simple POJOs (Plain Old Java Objects) to complex services, repositories, or controllers.</li>
+<li>By managing beans, Spring takes care of object creation, dependency injection, and lifecycle management.</li>
+</ul>
+<h3 id="how-spring-manages-beans">How Spring Manages Beans</h3>
+<ol>
+<li>
+<p><strong>Bean Definition:</strong> You define beans using annotations like <code>@Component</code>, <code>@Service</code>, or <code>@Repository</code>. These annotations mark a class as a bean candidate.</p>
+</li>
+<li>
+<p><strong>Bean Creation:</strong> When Spring encounters a bean definition, it uses reflection to instantiate the bean object.</p>
+</li>
+<li>
+<p><strong>Dependency Injection:</strong> If the bean has dependencies (other beans it needs to function), Spring automatically injects them using mechanisms like autowiring (with <code>@Autowired</code>).</p>
+</li>
+<li>
+<p><strong>Bean Lifecycle:</strong> Spring manages the bean's lifecycle through methods annotated with <code>@PostConstruct</code> (called after bean creation) and <code>@PreDestroy</code> (called before bean destruction).</p>
+</li>
+</ol>
+<h3 id="benefits-of-using-beans">Benefits of Using Beans</h3>
+<ul>
+<li>
+<p><strong>Simplified Object Management:</strong> Spring handles object creation, configuration, and lifecycle, reducing boilerplate code for developers.</p>
+</li>
+<li>
+<p><strong>Dependency Injection:</strong> Spring injects dependencies automatically, ensuring proper object relationships and loose coupling.</p>
+</li>
+<li>
+<p><strong>Centralized Configuration:</strong> Bean definitions consolidate application configuration, making it easier to manage and maintain.</p>
+</li>
+<li>
+<p><strong>Flexibility:</strong> Spring supports various bean scopes (singleton, prototype) to cater to different object usage patterns.</p>
+</li>
+</ul>
+<h3 id="examples-of-beans">Examples of Beans</h3>
+<ul>
+<li>
+<p>A <code>UserService</code> bean that interacts with a database using a <code>UserRepository</code> bean.</p>
+</li>
+<li>
+<p>A <code>ProductController</code> bean that handles incoming HTTP requests and interacts with a <code>ProductService</code> bean.</p>
+</li>
+<li>
+<p>A simple POJO bean representing a product entity.</p>
+</li>
+</ul>
+<h2 id="ways-to-create-beans-in-spring-boot-applications">Ways to Create Beans in Spring Boot Applications</h2>
+<h3 id="using-annotations-recommended">Using Annotations (Recommended)</h3>
+<p>Annotations are the most common and recommended approach for modern Spring development. You can annotate your classes with various annotations depending on their purpose:</p>
+<ul>
+<li><strong>@Component</strong>: Marks a general-purpose bean.</li>
+<li><strong>@Service</strong>: Marks a class that implements business logic (often used with repositories).</li>
+<li><strong>@Controller</strong>: Marks a class for handling web requests (used in RESTful APIs).</li>
+<li><strong>@Repository</strong>: Marks a class for data access (often interacts with databases).</li>
+</ul>
+<p>Example:</p>
+<pre class="hljs"><code><div><span class="hljs-meta">@Service</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyService</span> </span>{
+    <span class="hljs-comment">// Service logic</span>
+}
+</div></code></pre>
+<h3 id="java-configuration">Java Configuration</h3>
+<p>Spring allows defining bean configurations in Java classes using annotations.</p>
+<ol>
+<li><strong>Create a configuration class</strong> annotated with <code>@Configuration</code>.</li>
+<li><strong>Define methods within this class</strong> annotated with <code>@Bean</code>. The return value of these methods will be registered as beans in the Spring container.</li>
+</ol>
+<h4 id="example">Example:</h4>
+<pre class="hljs"><code><div><span class="hljs-meta">@Configuration</span>
+<span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyConfig</span> </span>{
+
+    <span class="hljs-meta">@Bean</span>
+    <span class="hljs-function"><span class="hljs-keyword">public</span> MyService <span class="hljs-title">myService</span><span class="hljs-params">()</span> </span>{
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MyService();
+    }
+}
+</div></code></pre>
+<h3 id="xml-configuration-less-common">XML Configuration (Less Common)</h3>
+<p>While annotations are preferred, Spring still supports traditional XML configuration for defining beans.</p>
+<ol>
+<li><strong>Create an XML file</strong> following the Spring bean definition schema.</li>
+<li><strong>Define beans</strong> using elements like <code>&lt;bean&gt;</code>, <code>&lt;property&gt;</code>, etc.</li>
+</ol>
+<h3 id="example">Example:</h3>
+<pre class="hljs"><code><div><span class="hljs-tag">&lt;<span class="hljs-name">beans</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">bean</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"myService"</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"com.example.MyService"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">beans</span>&gt;</span>
+</div></code></pre>
+<h2 id="choosing-the-right-approach">Choosing the Right Approach</h2>
+<ul>
+<li><strong>Annotations</strong>: Generally preferred for simplicity and code clarity.</li>
+<li><strong>Java Configuration</strong>: Offers more flexibility for complex bean configurations.</li>
+<li><strong>XML Configuration</strong>: Less common in modern Spring development but useful for legacy applications or integration with existing XML configurations.</li>
+</ul>
+<h1 id="dependency-injection-in-spring-boot">Dependency Injection in Spring Boot</h1>
+<p>There are three primary ways to achieve dependency injection in Spring Boot applications:</p>
+<h2 id="constructor-injection-recommended">Constructor Injection (Recommended)</h2>
+<p>This approach involves injecting dependencies through the constructor of a class. You declare your dependencies as constructor arguments and Spring automatically injects them during object creation. This method is generally preferred due to its clarity and explicitness.</p>
+<h3 id="example">Example:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>{
+
+  <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserRepository userRepository;
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">UserService</span><span class="hljs-params">(UserRepository userRepository)</span> </span>{
+    <span class="hljs-keyword">this</span>.userRepository = userRepository;
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title">getAllUsers</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> userRepository.findAll();
+  }
+}
+</div></code></pre>
+<h2 id="setter-injection">Setter Injection</h2>
+<p>This method involves using setter methods to inject dependencies. You mark your setter methods with <code>@Autowired</code> and Spring will call them during object creation to inject the required dependencies.</p>
+<h3 id="example">Example:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>{
+
+  <span class="hljs-keyword">private</span> UserRepository userRepository;
+
+  <span class="hljs-meta">@Autowired</span>
+  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUserRepository</span><span class="hljs-params">(UserRepository userRepository)</span> </span>{
+    <span class="hljs-keyword">this</span>.userRepository = userRepository;
+  }
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title">getAllUsers</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> userRepository.findAll();
+  }
+}
+</div></code></pre>
+<h2 id="field-injection-less-preferred">Field Injection (Less Preferred)</h2>
+<p>This approach involves marking fields with <code>@Autowired</code> to have Spring inject the dependencies directly. While it works, field injection is generally less preferred than constructor or setter injection. Field injection can lead to less predictable behavior and make testing more challenging.</p>
+<h3 id="example">Example:</h3>
+<pre class="hljs"><code><div><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserService</span> </span>{
+
+  <span class="hljs-meta">@Autowired</span>
+  <span class="hljs-keyword">private</span> UserRepository userRepository;
+
+  <span class="hljs-function"><span class="hljs-keyword">public</span> List&lt;User&gt; <span class="hljs-title">getAllUsers</span><span class="hljs-params">()</span> </span>{
+    <span class="hljs-keyword">return</span> userRepository.findAll();
+  }
+}
+</div></code></pre>
+<h2 id="choosing-the-right-approach">Choosing the Right Approach</h2>
+<ul>
+<li><strong>Constructor Injection</strong>: The most recommended approach due to its clarity and promotion of immutability (objects are created with all dependencies and cannot be modified later).</li>
+<li><strong>Setter Injection</strong>: Can be used when constructor injection is not feasible (e.g., dealing with legacy code).</li>
+<li><strong>Field Injection</strong>: Generally discouraged due to potential testability and visibility issues.</li>
+</ul>
+
+</body>
+</html>
