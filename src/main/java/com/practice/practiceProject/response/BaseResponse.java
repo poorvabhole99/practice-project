@@ -10,8 +10,8 @@ import java.io.Serializable;
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class BaseResponse implements Serializable {
-    private String message;
-    private Boolean success;
+    public String message;
+    public Boolean success;
 
 
     public BaseResponse(String message, Boolean success) {

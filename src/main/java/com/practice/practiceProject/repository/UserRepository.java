@@ -19,7 +19,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
   Optional<User> findByEmailId(String emailId);
 
-  @Query(value = "SELECT * FROM practice_project.user u WHERE u.roles LIKE %:role%", nativeQuery = true)
+  @Query(value = "SELECT * FROM practice_project.user WHERE roles LIKE %:role%", nativeQuery = true)
   List<User> findAllUserByRole(@Param("role") String role);
 
 

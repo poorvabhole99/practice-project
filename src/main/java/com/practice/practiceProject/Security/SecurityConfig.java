@@ -54,20 +54,21 @@ public class SecurityConfig {
         .cors(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth ->
             auth
-                .requestMatchers("/actuator/**").permitAll()
-                // Permit access to "/user/create" endpoint without authentication
-                .requestMatchers("/user/create").permitAll()
-                .requestMatchers("/shopowner/allCustomers").permitAll()
-                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                // Require authentication for endpoints matching "/user/getUser/**"
-                .requestMatchers(HttpMethod.GET, "/user/getUser/**")
-                .hasAnyRole(SHOP_OWNER, CUSTOMER)
-                .requestMatchers(HttpMethod.PUT, "/user/update/**").hasAnyRole(SHOP_OWNER)
-                .requestMatchers(HttpMethod.PUT, "/user/activate/**")
-                .hasAnyRole(SHOP_OWNER, CUSTOMER)
-                .requestMatchers("/user/delete/**").hasRole(SHOP_OWNER)
+                    .anyRequest().permitAll())
+//                .requestMatchers("/actuator/**").permitAll()
+//                // Permit access to "/user/create" endpoint without authentication
+//                .requestMatchers("/user/create").permitAll()
+//                .requestMatchers("/shopowner/allCustomers").permitAll()
+//                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+//                // Require authentication for endpoints matching "/user/getUser/**"
+//                .requestMatchers(HttpMethod.GET, "/user/getUser/**")
+//                .hasAnyRole(SHOP_OWNER, CUSTOMER)
+//                .requestMatchers(HttpMethod.PUT, "/user/update/**").hasAnyRole(SHOP_OWNER)
+//                .requestMatchers(HttpMethod.PUT, "/user/activate/**")
+//                .hasAnyRole(SHOP_OWNER, CUSTOMER)
+//                .requestMatchers("/user/delete/**").hasRole(SHOP_OWNER)
 
-                .requestMatchers("/test/**").permitAll())
+//                .requestMatchers("/test/**").permitAll())
 
         // Configure authentication provider to be used for authentication
         .authenticationProvider(daoAuthenticationProvider())

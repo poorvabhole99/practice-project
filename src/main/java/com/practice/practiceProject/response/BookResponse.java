@@ -1,33 +1,37 @@
 package com.practice.practiceProject.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.practice.practiceProject.entities.Book;
 import com.practice.practiceProject.entities.User;
 import lombok.Getter;
+import lombok.ToString;
 
 import java.util.List;
 
 @Getter
-public class BookResponse extends BaseResponse{
-    private Book book;
+@ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class BookResponse extends BaseResponse {
+    public Book book;
+    public List<Book> bookList;
+    public List<User> userList;
 
-    private List<Book> bookList;
 
-    private List<User> userList;
-
-    public BookResponse(String message, Boolean success){
-        super(message,success);
+    public BookResponse(String message, Boolean success) {
+        super(message, success);
     }
 
     public BookResponse(Book book, String message, Boolean success) {
-        super(message,success);
+        super(message, success);
         this.book = book;
     }
 
-    public BookResponse( List<Book> bookList , Boolean success) {
+    public BookResponse(List<Book> bookList, Boolean success) {
         super(success);
         this.bookList = bookList;
     }
-    public BookResponse(Boolean success, List<User> userList){
+
+    public BookResponse(Boolean success, List<User> userList) {
         super(success);
         this.userList = userList;
     }
