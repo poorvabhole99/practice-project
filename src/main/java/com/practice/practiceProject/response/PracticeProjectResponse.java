@@ -5,9 +5,11 @@ import com.practice.practiceProject.entities.Book;
 import com.practice.practiceProject.entities.User;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 public class PracticeProjectResponse extends BaseResponse{
     private  UserDto userDto;
     private  String statusCode;

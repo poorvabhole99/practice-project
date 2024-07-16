@@ -79,7 +79,7 @@ class UserServiceImplTest extends TestContainerBase {
   @Test
   void getSingleUser_UserFound_UserActive_PositiveScenario() throws UserNotFoundException {
     User user = new User();
-    user.setIsActive(true);
+    user.setStatus("ACTIVE");
     user.setPassword("testPassword");
     user.setFirstName("testFirstName");
     user.setLastName("testLastName");
@@ -107,7 +107,7 @@ class UserServiceImplTest extends TestContainerBase {
   @Test
   void deleteUser_UserFound() throws UserNotFoundException {
     User user = new User();
-    user.setIsActive(true);
+    user.setStatus("ACTIVE");
     user.setPassword("testPassword");
     user.setFirstName("testFirstName");
     user.setLastName("testLastName");

@@ -1,5 +1,6 @@
 package com.practice.practiceProject.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.practice.practiceProject.constant.BookConstant;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -8,6 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookDto {
 
     @Size(min = 5, message = BookConstant.SHORT_BOOK_TITLE)

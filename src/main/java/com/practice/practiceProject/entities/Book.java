@@ -1,5 +1,6 @@
 package com.practice.practiceProject.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.practice.practiceProject.audit.Auditable;
 import com.practice.practiceProject.constant.BookConstant;
 import jakarta.persistence.Column;
@@ -24,6 +25,7 @@ import lombok.ToString;
 @Entity
 @Table(name = "books")
 @ToString
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Book extends Auditable {
 
   @Id

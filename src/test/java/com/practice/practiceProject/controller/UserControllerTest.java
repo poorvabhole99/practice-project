@@ -41,11 +41,11 @@ class UserControllerTest extends TestContainerBase {
     protected WebApplicationContext context;
     @Autowired
     private ObjectMapper objectMapper;
+
     private MockMvc mockMvc;
     @MockBean
     private JwtAuthFilter jwtAuthFilter;
-    @MockBean
-    private UserRepository userRepository;
+
     @MockBean
     private UserServiceImpl userServiceImpl;
 
@@ -190,7 +190,7 @@ class UserControllerTest extends TestContainerBase {
         userDto.setPassword("password");
         PracticeProjectResponse practiceProjectResponse = new PracticeProjectResponse(
                 "User created successfully", userDto);
-
+        System.out.println(practiceProjectResponse);
         when(userServiceImpl.createUser(user)).thenReturn(practiceProjectResponse);
 
         mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_USER)

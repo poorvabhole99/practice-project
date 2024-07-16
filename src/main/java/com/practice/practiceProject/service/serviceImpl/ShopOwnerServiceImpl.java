@@ -38,8 +38,8 @@ public class ShopOwnerServiceImpl implements ShopOwnerService {
     log.debug("Add book method started");
     validateBookTitle(bookDto.getTitle());
     log.info("Add book method completed");
-    return new BookResponse(this.bookRepository.save(mapBookDetails(bookDto)),
-        BookConstant.BOOK_ADDED_SUCCESS, true);
+    final Book book = this.bookRepository.save(mapBookDetails(bookDto));
+    return new BookResponse(book, BookConstant.BOOK_ADDED_SUCCESS, true);
   }
 
   private void validateBookTitle(String bookTitle) throws PracticeProjectException {
@@ -132,12 +132,15 @@ public class ShopOwnerServiceImpl implements ShopOwnerService {
 
   @Override
   public UserResponse getAllCustomers() throws PracticeProjectException {
+    log.debug("Get all customer method started.");
     List<User> userList = this.userRepository.findAllUserByRole(RoleEnum.CUSTOMER.getValue());
     if (userList.isEmpty()) {
+      log.error("There is no customer available, list is empty.");
       throw new PracticeProjectException(
           new ErrorResponse(ErrorEnum.EMPTY_USER_LIST.getErrorMsg(), false,
               ErrorEnum.EMPTY_USER_LIST.getErrorCode()));
     }
+    log.info("Get all customer method completed.");
     return new UserResponse(userList, true);
   }
 }
