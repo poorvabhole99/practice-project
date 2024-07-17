@@ -23,6 +23,13 @@ public class SecurityConfig {
 
   private static final String CUSTOMER = "CUSTOMER";
   private static final String SHOP_OWNER = "SHOP_OWNER";
+  private static final String[] AUTH_WHITELIST = {
+      "/v3/api-docs/**",
+      "/swagger-ui/**",
+      "/api/auth/**",
+      "/api/test/**",
+      "/actuator/**"
+  };
   private final UserDetailsService userDetailsService;
   private final JwtAuthenticationEntryPoint point;
   private final JwtAuthFilter jwtAuthFilter;
@@ -50,25 +57,23 @@ public class SecurityConfig {
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     // Disable CSRF protection and CORS (Cross-Origin Resource Sharing) to simplify configuration
+
     http.csrf(AbstractHttpConfigurer::disable)
         .cors(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(auth ->
             auth
-                    .anyRequest().permitAll())
-//                .requestMatchers("/actuator/**").permitAll()
-//                // Permit access to "/user/create" endpoint without authentication
-//                .requestMatchers("/user/create").permitAll()
-//                .requestMatchers("/shopowner/allCustomers").permitAll()
-//                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-//                // Require authentication for endpoints matching "/user/getUser/**"
-//                .requestMatchers(HttpMethod.GET, "/user/getUser/**")
-//                .hasAnyRole(SHOP_OWNER, CUSTOMER)
-//                .requestMatchers(HttpMethod.PUT, "/user/update/**").hasAnyRole(SHOP_OWNER)
-//                .requestMatchers(HttpMethod.PUT, "/user/activate/**")
-//                .hasAnyRole(SHOP_OWNER, CUSTOMER)
-//                .requestMatchers("/user/delete/**").hasRole(SHOP_OWNER)
-
-//                .requestMatchers("/test/**").permitAll())
+                .requestMatchers(AUTH_WHITELIST).permitAll()
+                // Permit access to "/user/create" endpoint without authentication
+                .requestMatchers("/user/create").permitAll()
+                .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
+                //user related api
+                .requestMatchers(HttpMethod.GET, "/user/getUser/**")
+                .hasAnyRole(SHOP_OWNER, CUSTOMER)
+                .requestMatchers(HttpMethod.PUT, "/user/update/**").hasAnyRole(SHOP_OWNER, CUSTOMER)
+                .requestMatchers(HttpMethod.PUT, "/user/activate/**")
+                .hasAnyRole(SHOP_OWNER, CUSTOMER)
+                .requestMatchers("/user/delete/**").hasRole(SHOP_OWNER)
+                .requestMatchers("/shopowner/allCustomers").hasRole(SHOP_OWNER))
 
         // Configure authentication provider to be used for authentication
         .authenticationProvider(daoAuthenticationProvider())
