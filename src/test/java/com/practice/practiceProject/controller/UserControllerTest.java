@@ -25,6 +25,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
@@ -95,7 +96,7 @@ class UserControllerTest extends TestContainerBase {
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("$.firstName").value("First name can't be blank"));
+                .andExpect(jsonPath("$.firstName").value("First Name can't be less than 3 letters"));
 
     }
 
@@ -193,12 +194,14 @@ class UserControllerTest extends TestContainerBase {
         System.out.println(practiceProjectResponse);
         when(userServiceImpl.createUser(user)).thenReturn(practiceProjectResponse);
 
-        mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_USER)
+        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.post(POST_CREATE_USER)
                         .content(objectMapper.writeValueAsString(user))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.message").value("User created successfully"))
-                .andExpect(jsonPath("$.userDto.firstName").value("testFirstName"));
+                .andExpect(jsonPath("$.userDto.firstName").value("testFirstName")).andReturn();
+
+        System.out.println("Actual result ---> " + result.getResponse().getContentAsString());
     }
 
 

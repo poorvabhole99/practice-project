@@ -37,7 +37,6 @@ public class User extends Auditable {
     private String emailId;
 
     @Column(name = "first_name")
-    @NotBlank(message = "First name can't be blank")
     @NotNull(message = "Value can't be null")
     @Size(min = 3, message = "First Name can't be less than 3 letters")
     private String firstName;

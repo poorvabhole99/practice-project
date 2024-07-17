@@ -1,16 +1,16 @@
 package com.practice.practiceProject.response;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.practice.practiceProject.entities.Book;
 import com.practice.practiceProject.entities.User;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class BookResponse extends BaseResponse {
     public Book book;
     public List<Book> bookList;
