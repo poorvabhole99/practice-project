@@ -21,7 +21,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "rental")
-public class Rental extends Auditable {
+public class
+Rental extends Auditable {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;//Primary Key)
