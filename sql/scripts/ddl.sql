@@ -46,7 +46,7 @@ CREATE TABLE `orders` (
   CONSTRAINT `fk_order_1` FOREIGN KEY (`userId`) REFERENCES `user` (`id`)
 );
 
-CREATE TABLE `practice_project`.`order_item` (
+CREATE TABLE `root_practice_db`.`order_item` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `order_id` INT NOT NULL,
   `book_id` INT NOT NULL,
@@ -61,16 +61,16 @@ CREATE TABLE `practice_project`.`order_item` (
   INDEX `fk_order_item_2_idx` (`order_id` ASC) VISIBLE,
   CONSTRAINT `fk_order_item_1`
     FOREIGN KEY (`book_id`)
-    REFERENCES `practice_project`.`books` (`id`)
+    REFERENCES `root_practice_db`.`books` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_order_item_2`
     FOREIGN KEY (`order_id`)
-    REFERENCES `practice_project`.`orders` (`id`)
+    REFERENCES `root_practice_db`.`orders` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-CREATE TABLE `practice_project`.`rental` (
+CREATE TABLE `root_practice_db`.`rental` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `user_id` INT NOT NULL,
   `book_id` INT NOT NULL,
@@ -85,12 +85,12 @@ CREATE TABLE `practice_project`.`rental` (
   INDEX `fk_rental_2_idx` (`book_id` ASC) VISIBLE,
   CONSTRAINT `fk_rental_1`
     FOREIGN KEY (`user_id`)
-    REFERENCES `practice_project`.`user` (`id`)
+    REFERENCES `root_practice_db`.`user` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_rental_2`
     FOREIGN KEY (`book_id`)
-    REFERENCES `practice_project`.`books` (`id`)
+    REFERENCES `root_practice_db`.`books` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 

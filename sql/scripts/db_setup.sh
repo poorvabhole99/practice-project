@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DB_NAME="practice_project"
+DB_NAME="root_practice_db"
 DB_USER="root"
 DB_PASSWORD="poorva@112"
 DDL_FILE="ddl.sql"
