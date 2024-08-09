@@ -1,6 +1,22 @@
 version: '3.8'
 
 services:
+  mysql:
+    container_name: mysql-db
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpractice@123 # Set your root password
+      MYSQL_DATABASE: root_practice_db # Name of the default database to create
+      MYSQL_USER: practice_user # Username for the new database
+      MYSQL_PASSWORD: practice@123 # Password for the new user
+    ports:
+      - "3306:3306"  # Port mapping: host_port:container_port
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      - practiceproject
+
   springbootapp:
     container_name: spring-boot-app
     build:
@@ -11,11 +27,17 @@ services:
     depends_on:
       - mysql
     environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://100.29.3.123:3306/practiceProject?createDatabaseIfNotExist=true
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql-db:3306/root_practice_db?createDatabaseIfNotExist=true
       SPRING_DATASOURCE_USERNAME: practice_user
       SPRING_DATASOURCE_PASSWORD: practice@123
     networks:
       - practiceproject  # Define the network as a list item
 
+
+
 volumes:
   mysql_data:
+
+networks:
+  practiceproject:
+    driver: bridge
