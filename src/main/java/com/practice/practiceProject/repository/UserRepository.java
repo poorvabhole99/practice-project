@@ -22,5 +22,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
   @Query(value = "SELECT * FROM practice_project.user WHERE roles LIKE %:role%", nativeQuery = true)
   List<User> findAllUserByRole(@Param("role") String role);
 
+  @Query(value = "SELECT * FROM practice_project.user where id = ?1 AND status = ?2",nativeQuery = true)
+  Optional<User> findByUserIdAndStatus(String userId,String status);
 
 }
