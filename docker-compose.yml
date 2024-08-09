@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   springbootapp:
     container_name: spring-boot-app
@@ -8,14 +6,14 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8085:8085"
-    depends_on:
-      - mysql
-    environment:
-      SPRING_DATASOURCE_URL: jdbc:mysql://100.29.3.123:3306/practiceProject?createDatabaseIfNotExist=true
-      SPRING_DATASOURCE_USERNAME: practice_user
-      SPRING_DATASOURCE_PASSWORD: practice@123
-    networks:
-      - practiceproject  # Define the network as a list item
+#    depends_on:
+#      - mysql
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:mysql://100.29.3.123:3306/root_practice_db?createDatabaseIfNotExist=true
+#      SPRING_DATASOURCE_USERNAME: practice_user
+#      SPRING_DATASOURCE_PASSWORD: practice@123
+#    networks:
+#      - practiceproject  # Define the network as a list item
 
 volumes:
   mysql_data:
