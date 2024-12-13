@@ -44,8 +44,8 @@ class UserControllerTest extends TestContainerBase {
     private ObjectMapper objectMapper;
 
     private MockMvc mockMvc;
-    @MockBean
-    private JwtAuthFilter jwtAuthFilter;
+//    @MockBean
+//    private JwtAuthFilter jwtAuthFilter;
 
     @MockBean
     private UserServiceImpl userServiceImpl;
